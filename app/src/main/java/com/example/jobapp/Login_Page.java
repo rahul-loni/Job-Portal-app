@@ -24,7 +24,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Login_page extends AppCompatActivity {
+public class Login_Page extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private FirebaseAuth mAuth;
@@ -44,7 +44,7 @@ public class Login_page extends AppCompatActivity {
                 String txt_email=email.getText().toString();
                 String txt_password=password.getText().toString();
                 loginUser(txt_email,txt_password);
-                startActivity(new Intent(Login_page.this,Choose.class));
+                startActivity(new Intent(Login_Page.this,Choose.class));
                 finish();
             }
         });
@@ -53,7 +53,7 @@ public class Login_page extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(Login_page.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login_Page.this, "Logged in Successfully!", Toast.LENGTH_SHORT).show();
             }
         });
     }

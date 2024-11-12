@@ -53,7 +53,7 @@ public class Signup_Page extends AppCompatActivity {
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(Signup_Page.this,Login_page.class);
+                Intent i=new Intent(Signup_Page.this,Login_Page.class);
                 startActivity(i);
             }
         });
