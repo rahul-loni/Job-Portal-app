@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53405615807",
+    "project_id": "job-app-dfcb5",
+    "storage_bucket": "job-app-dfcb5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53405615807:android:e3e7550a76b9a487b1a80a",
+        "android_client_info": {
+          "package_name": "com.example.jobapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjlkS9JM53t7IzGNsjZsj9sCZeeoxkHEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
