@@ -1,24 +1,59 @@
 package com.example.jobapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class JobDisplay extends AppCompatActivity {
+    private TextView textview;
+    public FirebaseFirestore db=FirebaseFirestore.getInstance();
+    private CollectionReference ref = db.collection("employers");
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
+    protected void onCreate(Bundle SavedInstanceState) {
+        super.onCreate(SavedInstanceState);
         setContentView(R.layout.activity_job_display);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        textview=findViewById(R.id.textView5);
+        String position = getIntent().getStringExtra("pos");
+        Query q=ref.whereEqualTo("vacancy",position);
+        q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                Toast.makeText(JobDisplay.this, "The search is successful", Toast.LENGTH_SHORT).show();
+                String data = "";
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    employerModel e;
+                    e = new employerModel();
+                    e.setEditdocumentid(documentSnapshot.getId());
+                    String documentid = e.getEditdocumentid();
+                    String name = documentSnapshot.getString("name");
+                    String cname = documentSnapshot.getString("company name");
+                    String phone = documentSnapshot.getString("phone");
+                    String city = documentSnapshot.getString("city");
+                    String country = documentSnapshot.getString("country");
+                    String vac = documentSnapshot.getString("vacancy");
+                    //             data = String.format("%sDocument ID: %s\nEmployer name: %s\n Company name: %s\n Phone: %s\n City: %s\n Country: %s\n Vacancy: %s\n\n", data, documentid, name, cname, phone, city, country, vac);
+                    data+=data+"Document ID: "+documentid+"\n Employer name: "+name+"\n Company name: "+cname+"\n Phone: "+phone+"\n City: "+city+"\n Country :"+country+"\n Vacancy: "+vac+"\n";
+                }
+                textview.setText(data);
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(JobDisplay.this, "Search failed "+e, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
